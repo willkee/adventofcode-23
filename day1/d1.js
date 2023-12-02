@@ -7,33 +7,14 @@ const isNum = (val) => !isNaN(Number(val));
 const sumArray = (array) => array.reduce((acc, num) => acc + num, 0);
 
 function sumOfCalibrationValues(array) {
-	const arrayOfNums = [];
+	const nums = [];
 	for (const row of array) {
-		let firstNum = null;
-		let secondNum = null;
-		let numCount = 0;
-
-		for (const val of row) {
-			if (isNum(val)) {
-				numCount++;
-				if (firstNum === null) {
-					firstNum = Number(val);
-				} else {
-					secondNum = Number(val);
-				}
-			}
-		}
-
-		let combined;
-		if (secondNum === null) {
-			combined = Number(firstNum.toString() + firstNum.toString());
-		} else {
-			combined = Number(firstNum.toString() + secondNum.toString());
-		}
-		arrayOfNums.push(combined);
+		const numsOnly = row.replace(/[^1-9]/g, "");
+		const first = numsOnly[0];
+		const last = numsOnly[numsOnly.length - 1];
+		nums.push(Number(first.toString() + last.toString()));
 	}
-
-	return sumArray(arrayOfNums);
+	return sumArray(nums);
 }
 
 function sumOfCalibrationValuesP2(array) {
@@ -81,7 +62,7 @@ function sumOfCalibrationValuesP2(array) {
 	return sumArray(allNums);
 }
 
-// console.log(sumOfCalibrationValues(parsedArrayEx1));
+console.log(sumOfCalibrationValues(parsedArrayEx1));
 // console.log(sumOfCalibrationValuesP2(parsedArrayEx2));
-// console.log(sumOfCalibrationValues(inputArray));
-console.log(sumOfCalibrationValuesP2(inputArray));
+console.log(sumOfCalibrationValues(inputArray));
+// console.log(sumOfCalibrationValuesP2(inputArray));
