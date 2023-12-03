@@ -61,5 +61,46 @@ function Part1(arr) {
 	return idTotal;
 }
 
-console.log(Part1(parsedArrayEx1));
-console.log(Part1(inputArray));
+// PART 2
+
+function Part2(arr) {
+	const keyMap = {};
+
+	let sum = 0;
+
+	for (const line of arr) {
+		const [game, data] = line.split(": ");
+		const gameNum = game.split(" ")[1];
+		const dataMap = data.split("; ");
+		keyMap[gameNum] = { blue: 0, red: 0, green: 0 };
+
+		for (const round of dataMap) {
+			const group = round.split(", ");
+
+			for (const color of group) {
+				const [count, name] = color.split(" ");
+				const numCount = Number(count);
+
+				if (keyMap[gameNum][name] && keyMap[gameNum][name] < numCount) {
+					keyMap[gameNum][name] = numCount;
+				} else if (!keyMap[gameNum][name]) {
+					keyMap[gameNum][name] = numCount;
+				}
+			}
+		}
+	}
+
+	for (const [_, data] of Object.entries(keyMap)) {
+		const { blue, red, green } = data;
+
+		const power = blue * red * green;
+		sum += power;
+	}
+
+	return sum;
+}
+
+// console.log(Part1(parsedArrayEx1));
+// console.log(Part1(inputArray));
+console.log(Part2(parsedArrayEx1));
+console.log(Part2(inputArray));
