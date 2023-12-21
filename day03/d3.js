@@ -97,5 +97,34 @@ const Part1 = (matrix) => {
 	return sumArray(arrayOfNums);
 };
 
-console.log(Part1(parsedArrayEx1));
-console.log(Part1(inputArray));
+const Part2 = (matrix) => {
+	const arrayOfNums = [];
+
+	for (let row = 0; row < matrix.length; row++) {
+		for (let col = 0; col < matrix[row].length; col++) {
+			const el = matrix[row][col];
+			if (el === "*") {
+				// Gear found; look in all directions for numbers
+				// If found, add to array
+				const gearRatio = [];
+				const coords = adjNumCoords(matrix, [row, col]);
+				for (const [row, col] of coords) {
+					const num = getPartNum(matrix, [row, col]);
+					if (num > 0) gearRatio.push(num);
+				}
+
+				if (gearRatio.length === 2) {
+					arrayOfNums.push(gearRatio[0] * gearRatio[1]);
+				}
+			}
+		}
+	}
+
+	// sum up the numbers
+	return sumArray(arrayOfNums);
+};
+
+// console.log(Part1(parsedArrayEx1));
+// console.log(Part1(inputArray));
+console.log(Part2(parsedArrayEx1));
+console.log(Part2(inputArray));
