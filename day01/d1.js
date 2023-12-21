@@ -3,8 +3,8 @@ const parsedArrayEx1 = parseTextFileIntoArray("./example1.txt");
 const parsedArrayEx2 = parseTextFileIntoArray("./example2.txt");
 const inputArray = parseTextFileIntoArray("./input.txt");
 
+const { sumArray } = require("../utils/library");
 const isNum = (val) => !isNaN(Number(val));
-const sumArray = (array) => array.reduce((acc, num) => acc + num, 0);
 
 function sumOfCalibrationValues(array) {
 	const nums = [];
