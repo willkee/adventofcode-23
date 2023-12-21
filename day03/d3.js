@@ -93,6 +93,7 @@ const Part1 = (matrix) => {
 		}
 	}
 
+	// sum up the numbers
 	return sumArray(arrayOfNums);
 };
 
