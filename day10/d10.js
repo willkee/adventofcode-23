@@ -9,35 +9,38 @@ const checkValidDirs = (arr, r, c, dist, stack) => {
 
 	if (stack.length === 0 && dist !== 1) return;
 
-	const U = ["|", "7", "F"];
-	const D = ["|", "L", "J"];
-	const L = ["-", "L", "F"];
-	const R = ["-", "J", "7"];
+	// const U = ["|", "7", "F"];
+	// const D = ["|", "L", "J"];
+	// const L = ["-", "L", "F"];
+	// const R = ["-", "J", "7"];
 
 	const lastRow = arr.length - 1;
-
 	const lastCol = arr[r].length - 1;
 
-	if (r > 0 && U.includes(arr[r - 1][c])) {
-		stack.push([r - 1, c, dist]);
+	if (r > 0 && arr[r - 1][c].toString().match(/[\|7F]/)) {
+		const data = { row: r - 1, col: c, dist: dist };
+		stack.push(data);
 		arr[r - 1][c] = dist;
 	}
-	if (r < lastRow && D.includes(arr[r + 1][c])) {
-		stack.push([r + 1, c, dist]);
+	if (r < lastRow && arr[r + 1][c].toString().match(/[\|LJ]/)) {
+		const data = { row: r + 1, col: c, dist: dist };
+		stack.push(data);
 		arr[r + 1][c] = dist;
 	}
-	if (c > 0 && L.includes(arr[r][c - 1])) {
-		stack.push([r, c - 1, dist]);
+	if (c > 0 && arr[r][c - 1].toString().match(/[\-LF]/)) {
+		const data = { row: r, col: c - 1, dist: dist };
+		stack.push(data);
 		arr[r][c - 1] = dist;
 	}
-	if (c < lastCol && R.includes(arr[r][c + 1])) {
-		stack.push([r, c + 1, dist]);
+	if (c < lastCol && arr[r][c + 1].toString().match(/[\-J7]/)) {
+		const data = { row: r, col: c + 1, dist: dist };
+		stack.push(data);
 		arr[r][c + 1] = dist;
 	}
 
 	dist++;
-	const nextLoc = stack.shift();
-	checkValidDirs(arr, nextLoc[0], nextLoc[1], nextLoc[2] + 1, stack);
+	const next = stack.shift();
+	checkValidDirs(arr, next.row, next.col, next.dist + 1, stack);
 };
 
 function Day10Part1(arr) {
@@ -55,9 +58,11 @@ function Day10Part1(arr) {
 				let dist = 1;
 				const stack = [];
 				checkValidDirs(arr, row, col, dist, stack);
+				break;
 			}
 		}
 	}
+	console.log(arr);
 
 	let max = 0;
 	for (const row of arr) {
